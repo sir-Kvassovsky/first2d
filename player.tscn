@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://bcutg5nr8tpfk"]
+[gd_scene load_steps=7 format=3 uid="uid://bcutg5nr8tpfk"]
 
 [ext_resource type="Texture2D" uid="uid://h4v7uqd8pgua" path="res://art/ship.png" id="1_3fyew"]
+[ext_resource type="Script" path="res://Player.cs" id="1_eibki"]
 [ext_resource type="Texture2D" uid="uid://b6qcws3lhh2yk" path="res://art/up1.png" id="2_7205q"]
 [ext_resource type="Texture2D" uid="uid://bxqsiochepf26" path="res://art/up2.png" id="3_7slih"]
 
@@ -31,17 +32,15 @@ radius = 9.0
 height = 27.6471
 
 [node name="Player" type="Area2D"]
+script = ExtResource("1_eibki")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_rryiv")
-animation = &"up"
-frame = 1
-frame_progress = 0.898957
+animation = &"new_animation"
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(-2, -11)
 scale = Vector2(2, 3.4)
 shape = SubResource("CapsuleShape2D_kxsbq")
