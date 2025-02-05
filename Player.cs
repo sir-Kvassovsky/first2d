@@ -1,11 +1,20 @@
 using Godot;
 using System;
+using System.Diagnostics.Contracts;
+using System.Runtime.Intrinsics.X86;
 
 public partial class Player : Area2D
 {	
+	[Signal]
+	public delegate void HitEventHandler();
 	[Export]
-	public int Speed {get; set;} = 400;
-	public double rad = 0.0174532925;
+	public int SpeedCap {get; set;} = 500;
+	[Export]
+	public int SpeedUp {get; set;} = 10;
+	public int Speed = 0;
+	public const float rad = 0.0174532925f;
+	public float angle = 0f;
+	public bool flag = false;
 	public Vector2 SSize;
     public override void _Ready()
     {
@@ -14,22 +23,43 @@ public partial class Player : Area2D
     
 	public override void _Process(double delta)
 	{
-		var movement = Vector2.Zero;
-		// идея для мумента:
-		// был неправ
-		// 
-		// просто у меня корабль это вектор у которого изначаль
-		// опять неправ
-		//корабля не существует это просто точка на ненго забить
-		// когда поворот то англе меняется и от этого будет всегда строится вектор перемещзения
-		// то есть когда у меня он прямо то постеепенно разганяется но если прямо смотрит то (1, 0)
-		// а если не прям то вектор фром англе умножить на скорость которая постепенно увеличивается
-		// воттак вот
-
-		if (Input.IsActionPressed("turn_clock"))		
+		flag = false;
+		if (Input.IsActionPressed("turn_clock"))
 		{
-			movement.X += 1;
+			angle += 2f;
 		}
-		if (I)
+		if (Input.IsActionPressed("turn_cnt_clock"))
+		{
+			angle -= 2f;
+		}
+		if (Input.IsActionPressed("accelerate"))
+		{
+			flag = true;
+		}
+		AnimatedSprite2D animatedSprite2D = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		animatedSprite2D.Rotation = angle*rad;
+		Vector2 velocity = Vector2.FromAngle((angle+270)*rad);
+		if (flag)
+		{
+			Speed = Math.Min(SpeedCap, Speed+SpeedUp); 
+			velocity *= Speed;
+			animatedSprite2D.Animation = "up";
+			animatedSprite2D.Play();
+		}
+		else 
+		{
+			Speed = Math.Max(0, Speed-(int)Math.Round(SpeedUp/2d));
+			velocity *= Speed;
+			animatedSprite2D.Animation = "default";
+			animatedSprite2D.Stop();
+		}
+
+		Position += velocity * (float)delta;
+		int pix = 10;
+		if (Position.X+pix < 0) {Position += new Vector2(SSize.X+2*pix, 0);}
+		if (Position.X > SSize.X+pix) {Position -= new Vector2(SSize.X-2*pix, 0);}
+		if (Position.Y+pix < 0) {Position += new Vector2(0, SSize.Y+2*pix);}
+		if (Position.Y > SSize.Y+pix) {Position -= new Vector2(0, SSize.Y+2*pix);}
 	}
 }
+

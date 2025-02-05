@@ -12,7 +12,7 @@ animations = [{
 "texture": ExtResource("1_3fyew")
 }],
 "loop": true,
-"name": &"new_animation",
+"name": &"default",
 "speed": 5.0
 }, {
 "frames": [{
@@ -37,10 +37,11 @@ metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_rryiv")
-animation = &"new_animation"
+animation = &"up"
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-2, -11)
 scale = Vector2(2, 3.4)
 shape = SubResource("CapsuleShape2D_kxsbq")
+metadata/_edit_group_ = true
