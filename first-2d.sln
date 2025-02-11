@@ -1,6 +1,6 @@
 ﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "New Game Project", "New Game Project.csproj", "{CE1FE62C-2C83-4674-8294-D135850D8DF4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "first-2d", "first-2d.csproj", "{CE1FE62C-2C83-4674-8294-D135850D8DF4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

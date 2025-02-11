@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Diagnostics.Contracts;
+using System.Reflection.Emit;
 using System.Runtime.Intrinsics.X86;
 
 public partial class Player : Area2D
@@ -16,12 +17,25 @@ public partial class Player : Area2D
 	public float angle = 0f;
 	public bool flag = false;
 	public Vector2 SSize;
+	private void OnBodyEntered(Node2D body)
+	{
+		Hide();
+		EmitSignal(SignalName.Hit);
+		GetNode<CollisionShape2D>("CollisionShape2D").SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
+	}
+	public void Start(Vector2 position)
+	{
+		Position = position;
+		Show();
+		GetNode<CollisionShape2D>("CollisionShape2D").Disabled = false;
+	}
     public override void _Ready()
     {
+		Hide();
 		SSize = GetViewportRect().Size;
     }
     
-	public override void _Process(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
 		flag = false;
 		if (Input.IsActionPressed("turn_clock"))
