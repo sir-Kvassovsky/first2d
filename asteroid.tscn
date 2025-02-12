@@ -1,0 +1,76 @@
+[gd_scene load_steps=9 format=3 uid="uid://dnpyhy7vgeswr"]
+
+[ext_resource type="Texture2D" uid="uid://bylh73wqd2ke7" path="res://art/asteroid.png" id="1_5yk4k"]
+[ext_resource type="Script" path="res://Asteroid.cs" id="1_him2o"]
+[ext_resource type="Texture2D" uid="uid://gh4bkpsj0g8p" path="res://art/healtBack.png" id="2_drexi"]
+[ext_resource type="Texture2D" uid="uid://cmttt6vog04d0" path="res://art/powerUp.png" id="3_5vivw"]
+[ext_resource type="Texture2D" uid="uid://be64rmvs6y740" path="res://art/enemy2.png" id="3_wbvfo"]
+[ext_resource type="Texture2D" uid="uid://cvokyxodrpii7" path="res://art/shotUp.png" id="4_4omcq"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_npj0p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_5yk4k")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_drexi")
+}],
+"loop": true,
+"name": &"healt",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_5vivw")
+}],
+"loop": true,
+"name": &"power",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_4omcq")
+}],
+"loop": true,
+"name": &"shot",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_wbvfo")
+}],
+"loop": true,
+"name": &"strong",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_b7owj"]
+
+[node name="Asteroid" type="RigidBody2D"]
+rotation = 1.5708
+collision_mask = 0
+script = ExtResource("1_him2o")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -5)
+scale = Vector2(0.6, 0.6)
+sprite_frames = SubResource("SpriteFrames_npj0p")
+animation = &"healt"
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(10.7, 10.7)
+shape = SubResource("CircleShape2D_b7owj")
+metadata/_edit_group_ = true
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+metadata/_edit_group_ = true
+
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="OnVisibleOnScreenNotifier2DScreenExited"]
